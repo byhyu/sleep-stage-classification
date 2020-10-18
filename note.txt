@@ -1,0 +1,5 @@
+$ docker run -it jupyter/pyspark-notebook /bin/bash
+Flint:
+https://github.com/twosigma/flint/tree/master/python
+Follow the instructions to install
+
