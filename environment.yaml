@@ -1,0 +1,26 @@
+name: pysleep
+channels:                    # Lists package sources to install from
+- defaults                   # Default Anaconda Repository
+- conda-forge
+- anaconda
+dependencies:
+  - python=3.7.5
+  - flake8
+  - h5py
+  - matplotlib
+  - numpy
+  - pandas
+  - pip
+  - pytest
+  - scikit-learn
+  - tensorflow
+  - tensorflow-gpu
+  - scipy
+  - tqdm
+  - werkzeug
+  - xarray
+  - loguru
+
+  - pip:
+    - mne
+    - -e .
