@@ -133,6 +133,19 @@ https://github.com/akaraspt/deepsleepnet
 This Medium article presents a simple CNN model that is easy to reproduce.
 https://towardsdatascience.com/sleep-stage-classification-from-single-channel-eeg-using-convolutional-neural-networks-5c710d92d38e
 
+# Model Architecture
+For single sleep epoch (30s by 100Hz = 3000 data points), need to encode into a single category {W, R, N1, N2, N3}
+For sleep epoch sequences (for example, 8H sleep represented by multiple 30s epochs), output a sequence of categories.
+
+CNN, SVM, or other classification models for single sleep epoch encoding.
+LSTM for sequence classification.
+
+# Train models
+## track model performance using `Tensorboard`
+In command line:
+`tensorboard --logdir playground\logs\fit`
+
+
 # Task breakup
 ## Timeline
 
@@ -158,8 +171,4 @@ https://towardsdatascience.com/sleep-stage-classification-from-single-channel-ee
 - Visualize
 - Write report or paper if time permits
 
-# Train models
-## track model performance using `Tensorboard`
-In command line:
-`tensorboard --logdir playground\logs\fit`
 
