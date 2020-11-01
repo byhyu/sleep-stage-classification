@@ -42,4 +42,19 @@ def create_cnn_model1():
     return model
 
 def create_cnn_cnn():
+    seq_input = layers.Input(shape=(None, 3000, 1))
+    epoch_encoding_model = create_cnn_model1()
+    encoded_sequence = layers.TimeDistributed(epoch_encoding_model)
+    model = Sequential(layers=[seq_input,
+                               encoded_sequence,
+                               layers.Convolution1D(64, kernel_size=3, activation='relu',padding='same'),
+                               layers.Convolution1D(64, kernel_size=3, activation='relu',padding='same'),
+                               layers.Convolution1D(5, kernel_size=3, activation='softmax', padding='same')]
+                       )
+    model.compile(optimizers.Adam(0.001), losses.sparse_categorical_crossentropy, metrics=['acc'])
+    model.summary()
+    return model
+
+
+def create_cnn_lstm():
     pass

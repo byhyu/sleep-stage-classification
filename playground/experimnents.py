@@ -22,7 +22,7 @@ train, val = train_test_split(train_val, test_size=0.2, random_state=42)
 model1 = create_baseline_dnn_model()
 model2 = SleepModels.create_cnn_model1()
 # model3 = SleepModels.create_dnn_model2()
-
+model_cnn_cnn = SleepModels.create_cnn_cnn()
 # file_path = str(Path(r'..\saved_models\dnn_model2.h5'))
 # checkpoint = ModelCheckpoint(file_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 # early = EarlyStopping(monitor="val_acc", mode="max", patience=20, verbose=1)
@@ -34,7 +34,9 @@ log_path = log_dir/datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = TensorBoard(log_dir=log_path, histogram_freq=1)
 
 data_generator = DataGenerator(train[0:3], batch_size=8)
-model2.fit(data_generator, verbose=2, callbacks=[tensorboard_callback])#, callbacks=callbacks_list)
+model1.fit(data_generator, verbose=2, callbacks=[tensorboard_callback])#, callbacks=callbacks_list)
+model_cnn_cnn.fit(data_generator, verbose=2, callbacks=[tensorboard_callback])#, callbacks=callbacks_list)
+
 #%% test
 # TODO: test model
 
