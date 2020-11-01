@@ -33,9 +33,13 @@ def create_cnn_model1():
     model.add(layers.Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid"))
     # model.add(layers.Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid"))
     model.add(layers.MaxPool1D(pool_size=2))
+    model.add(layers.Flatten())
     model.add(Dense(256, activation='relu'))
     model.add(Dense(128, activation='relu'))
     model.add(Dense(5, activation=activations.softmax))
     model.compile(optimizer=optimizers.Adam(0.001), loss=losses.sparse_categorical_crossentropy, metrics=['acc'] )
     model.summary()
     return model
+
+def create_cnn_cnn():
+    pass

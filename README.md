@@ -157,3 +157,9 @@ https://towardsdatascience.com/sleep-stage-classification-from-single-channel-ee
     - Deep networks, CNN, RNN, LSTM
 - Visualize
 - Write report or paper if time permits
+
+# Train models
+## track model performance using `Tensorboard`
+In command line:
+`tensorboard --logdir playground\logs\fit`
+

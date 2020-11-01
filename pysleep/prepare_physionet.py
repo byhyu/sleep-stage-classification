@@ -14,7 +14,7 @@ import numpy as np
 from mne import Epochs, pick_types, find_events
 from mne.io import concatenate_raws, read_raw_edf
 
-import dhedfreader
+from pysleep import dhedfreader
 from pathlib import Path
 
 # Label values
@@ -59,9 +59,9 @@ EPOCH_SEC_SIZE = 30
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_dir", type=str, default="data\sleep-edf-database-expanded-1.0.0\sleep-cassette",
+    parser.add_argument("--data_dir", type=str, default=Path(f"data\sleep-edf-database-expanded-1.0.0\sleep-cassette"),
                         help="File path to the CSV or NPY file that contains walking data.")
-    parser.add_argument("--output_dir", type=str, default=Path(r".\data\physionet_sleep\eeg_fpz_cz"),
+    parser.add_argument("--output_dir", type=str, default=Path(r".\data\processed\eeg_fpz_cz"),
                         help="Directory where to save outputs.")
     parser.add_argument("--select_ch", type=str, default="EEG Fpz-Cz",
                         help="File path to the trained model used to estimate walking speeds.")
@@ -78,12 +78,14 @@ def main():
     select_ch = args.select_ch
 
     # Read raw and annotation EDF files
-    psg_fnames = glob.glob(os.path.join(args.data_dir, "*PSG.edf"))
+    psg_fnames = list(args.data_dir.glob("*PSG.edf"))
+    # psg_fnames = glob.glob(os.path.join(args.data_dir, "*PSG.edf"))
     ann_fnames = glob.glob(os.path.join(args.data_dir, "*Hypnogram.edf"))
     psg_fnames.sort()
     ann_fnames.sort()
     psg_fnames = np.asarray(psg_fnames)
     ann_fnames = np.asarray(ann_fnames)
+    print(f'number of PSG files: {len(psg_fnames)}')
 
     for i in range(0,len(psg_fnames)):
     # for i in range(3):
