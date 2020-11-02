@@ -74,6 +74,7 @@ A more detailed view of code structure (files may change):
 │ ├── eda.py
 │ ├── experimnents.py
 │ ├── explore_models.py
+│ ├── RandomForest.ipynb
 │ ├── LoadData.ipynb
 │ ├── prepare_train_test_dataset.py
 │ └── try_data_loader.py

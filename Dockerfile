@@ -29,7 +29,6 @@ RUN apt-get install -yq --no-install-recommends \
     qt5-default \
     && apt-get clean
 
-
 # Downloaad sleep data from physionet.org: https://physionet.org/content/sleep-edfx/1.0.0/. 
 # File size ~8.1 G. The download process is slow. Disable it if you don't want to download the data.
 RUN wget -r -N -c -np https://physionet.org/files/sleep-edfx/1.0.0/
