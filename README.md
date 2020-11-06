@@ -172,5 +172,6 @@ In command line:
     - Deep networks, CNN, RNN, LSTM
 - Visualize
 - Write report or paper if time permits
+  google doc link: https://docs.google.com/document/d/1fRVr9LfeSHq5dsV8gXI2MyE2kPCZxkOKsmP9IM1i88U/edit#
 
 
