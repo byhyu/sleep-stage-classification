@@ -1,26 +1,21 @@
-name: pysleep
-channels:                    # Lists package sources to install from
-- defaults                   # Default Anaconda Repository
-- conda-forge
-- anaconda
+name: pysleep_torch
+channels:
+  - pytorch
+  - defaults
 dependencies:
-  - python=3.7.5
-  - flake8
-  - h5py
-  - matplotlib
-  - numpy
-  - pandas
-  - pip
-  - pytest
+  - python=3.6
+  - pillow==6.2.1
+  - pytorch==1.3.1
+  - torchvision==0.4.2
+  - cudatoolkit>=9.2    # mac OS users should comment out this (for CPU only) or build from the source
   - scikit-learn
-  - tensorflow
-  - tensorflow-gpu
+  - numpy
   - scipy
-  - tqdm
-  - werkzeug
-  - xarray
-  - loguru
-
+  - pandas
+  - matplotlib==3.1.0
+  - pytest
+  - pip
   - pip:
+    - delayed-assert
     - mne
     - -e .

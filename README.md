@@ -130,6 +130,11 @@ https://github.com/SuperBruceJia/EEG-DL
 ## DeepSleepNet
 https://github.com/akaraspt/deepsleepnet
 
+## SleepEEGNet
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0216456
+
+https://github.com/MousaviSajad/SleepEEGNet
+
 ## Blogs and articles
 This Medium article presents a simple CNN model that is easy to reproduce.
 https://towardsdatascience.com/sleep-stage-classification-from-single-channel-eeg-using-convolutional-neural-networks-5c710d92d38e
