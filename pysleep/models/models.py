@@ -66,9 +66,6 @@ def create_cnn_cnn():
     return model
 
 
-def create_cnn_lstm():
-    pass
-
 def cnn_v0():
     model = Sequential(layers=[
         layers.Convolution1D(16, kernel_size=5, activation='relu', padding='valid', input_shape=(3000, 1)),
@@ -95,13 +92,17 @@ def cnn_v01(n_outputs=5):
     model.add(Flatten())
     model.add(Dense(100, activation='relu'))
     model.add(Dense(n_outputs, activation='softmax'))
-    model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(optimizer=optimizers.Adam(0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     return model
 
-def cnn_v1():
+def cnn_v1(lr=0.005):
     model = Sequential(layers=[
-        layers.Convolution1D(16, kernel_size=5, activation='relu', padding='valid', input_shape=(3000,1)),
-        layers.Convolution1D(16, kernel_size=5, activation='relu', padding='valid'),
+        layers.Convolution1D(32, kernel_size=5, strides=1, activation='relu', padding='valid', input_shape=(3000,1)),
+        layers.Convolution1D(32, kernel_size=5, strides=1, activation='relu', padding='valid'),
+        layers.MaxPool1D(pool_size=2),
+        layers.SpatialDropout1D(rate=0.01),
+        layers.Convolution1D(64, kernel_size=25, strides=6, activation='relu', padding='valid', input_shape=(3000, 1)),
+        layers.Convolution1D(64, kernel_size=50, strides=6, activation='relu', padding='valid'),
         layers.MaxPool1D(pool_size=2),
         layers.SpatialDropout1D(rate=0.01),
         layers.Convolution1D(32, kernel_size=3, activation='relu', padding='valid'),
@@ -119,9 +120,41 @@ def cnn_v1():
         layers.Dropout(rate=0.01),
         layers.Dense(64, activation='relu'),
         layers.Dropout(rate=0.05),
-        layers.Dense(5, activation='softmax'),]
+        layers.Dense(5, activation='softmax')]
     )
-    model.compile(optimizer=optimizers.Adam(0.001), loss=losses.sparse_categorical_crossentropy, metrics=['accuracy']) #,class_model='categorical'
+    model.compile(optimizer=optimizers.Adam(lr), loss=losses.sparse_categorical_crossentropy, metrics=['accuracy']) #,class_model='categorical'
+    return model
+
+def cnn_v2(lr=0.005):
+    model = Sequential(layers=[
+        layers.Convolution1D(128, kernel_size=50, strides=25, activation='relu', padding='valid', input_shape=(3000,1)),
+        # layers.Convolution1D(128, kernel_size=50, strides=25, activation='relu', padding='valid'),
+        layers.MaxPool1D(pool_size=8, strides=8),
+        layers.SpatialDropout1D(rate=0.1),
+        layers.Convolution1D(128, kernel_size=8, strides=1, activation='relu', padding='valid'),
+        layers.Convolution1D(128, kernel_size=8, strides=1, activation='relu', padding='valid'),
+        layers.Convolution1D(128, kernel_size=8, strides=1, activation='relu', padding='valid'),
+        layers.MaxPool1D(4,4),
+        layers.SpatialDropout1D(rate=0.5),
+        layers.Flatten(),
+        # layers.Convolution1D(32, kernel_size=3, activation='relu', padding='valid'),
+        # layers.Convolution1D(32, kernel_size=3, activation='relu', padding='valid'),
+        # layers.MaxPool1D(pool_size=2),
+        # layers.SpatialDropout1D(rate=0.1),
+        # layers.Convolution1D(32, kernel_size=3, activation='relu', padding='valid'),
+        # layers.Convolution1D(32, kernel_size=3, activation='relu', padding='valid'),
+        # layers.MaxPool1D(pool_size=2),
+        # layers.Convolution1D(256, kernel_size=3, activation='relu', padding='valid'),
+        # layers.Convolution1D(256, kernel_size=3, activation='relu', padding='valid'),
+        # layers.GlobalMaxPool1D(),
+        # layers.Dropout(rate=0.01),
+        layers.Dense(64, activation='relu'),
+        layers.Dropout(rate=0.1),
+        # layers.Dense(64, activation='relu'),
+        layers.Dropout(rate=0.5),
+        layers.Dense(5, activation='softmax')]
+    )
+    model.compile(optimizer=optimizers.Adam(lr), loss=losses.sparse_categorical_crossentropy, metrics=['accuracy']) #,class_model='categorical'
     return model
 
 def cnn_base():
@@ -146,7 +179,6 @@ def cnn_base():
     )
     model.compile(optimizer=optimizers.Adam(0.001), loss=losses.sparse_categorical_crossentropy, metrics=['acc']) #,class_model='categorical'
     return model
-
 
 def cnn_cnn():
     seq_input = layers.Input(shape=(10, 3000, 1))
@@ -191,6 +223,3 @@ def cnn_cnn_1():
     #     layers.Bidirectional(layers.LSTM)
     # pass
 
-
-def deep_sleep_net():
-    pass

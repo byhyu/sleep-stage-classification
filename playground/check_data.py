@@ -1,6 +1,6 @@
 from pathlib import Path
 import numpy as np
-from pysleep.data import SeqDataGenerator
+from pysleep.data_generator import SeqDataGenerator
 data_dir = Path(r'../data/physionet_sleep/eeg_fpz_cz')
 data_files = list(data_dir.glob('*.npz'))
 # for dfile in data_files:

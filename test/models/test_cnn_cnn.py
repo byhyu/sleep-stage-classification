@@ -3,10 +3,11 @@ import numpy as np
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau, TensorBoard
 import datetime
 from pathlib import Path
-from pysleep.data import DataGenerator, SeqDataGenerator, SeqOneOutGenerateor
+from pysleep.data_generator import DataGenerator, SeqDataGenerator, SeqOneOutGenerateor
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from pysleep.models import cnn_cnn, cnn_cnn_1, cnn_v0
+from pysleep.data_generator import create_dataset
 
 file_path = str(Path(r'C:\Users\hyu\github-repos\LearnFromSleepData\saved_models\cnn_v0.h5'))
 checkpoint = ModelCheckpoint(file_path, monitor='val_acc', verbose=1, save_best_only=False)#mode='max'
@@ -70,7 +71,6 @@ def test_cnn_v0():
     #              early,
     #              redonplat]
 
-
     hist = model.fit(Xy, validation_data=val_gen, epochs=50, callbacks=callbacks)
     print(hist.history)
 
@@ -111,14 +111,35 @@ def test_cnn_cnn_seq_input():
     hist = model.fit(Xy, epochs=5)
     print(hist.history)
 
+
+def test_create_dataset():
+    train, val, test = prepare_train_test()
+    X, y = create_dataset(train[0:2])
+
 def test_cnn_v01():
     from pysleep.models import cnn_v01
-    train, val, test = prepare_train_test()
-    Xy = DataGenerator(train[0:3], batch_size=4)
-    val_gen = DataGenerator(val[0:2], batch_size=4)
     model = cnn_v01()
-    hist = model.fit(Xy, validation_data=val_gen, epochs=50, callbacks=callbacks)
+    train, val, test = prepare_train_test()
+    X,y = create_dataset(train[0:])
+    val_X, val_y = create_dataset(val[0:3])
+    hist = model.fit(X, y, batch_size=4, epochs=10, callbacks=callbacks)
     print(hist.history)
+
+def test_cnn_v1():
+    from pysleep.models import cnn_v1
+    model = cnn_v1()
+    train, val, test = prepare_train_test()
+    X,y = create_dataset(train[0:])
+    val_X, val_y = create_dataset(val[0:3])
+    hist = model.fit(X, y, validation_data=(val_X,val_y), batch_size=4, epochs=10, callbacks=callbacks)
+    print(hist.history)
+
+
+    # Xy = DataGenerator(train[0:3], batch_size=4)
+    # val_gen = DataGenerator(val[0:2], batch_size=4)
+    #
+    # hist = model.fit(Xy, validation_data=val_gen, epochs=50, callbacks=callbacks)
+    # print(hist.history)
 
 #
 # train, val, test = prepare_train_test()

@@ -6,7 +6,7 @@ from pysleep import models
 from pysleep.models import create_baseline_dnn_model
 from pysleep import models as SleepModels
 import numpy as np
-from pysleep.data import DataGenerator, SeqDataGenerator
+from pysleep.data_generator import DataGenerator, SeqDataGenerator
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, accuracy_score
