@@ -93,6 +93,11 @@ A more detailed view of code structure (files may change):
 │ └── dnn_model2.h5
 ├── setup.py
 ```
+# How to run
+Then entry point is the `playground` folder. `RandomForest.ipynb` contains initial exploration using random forest and nearest neighbors.
+`sleep_project_optimized.py` contains model finetuning and furture feature engineeering.
+`deeplearnibg` folder contains explorations with CNN and LSTM models. 
+
 # Dataset
 1. [PhysioNet](https://www.physionet.org/content/sleep-edfx/1.0.0/)
 Online data viewer:
