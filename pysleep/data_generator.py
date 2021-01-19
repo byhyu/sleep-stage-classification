@@ -1,8 +1,10 @@
 import functools
-
+from pathlib import Path
 import numpy as np
 from tensorflow.keras.utils import Sequence, to_categorical
 import tensorflow as tf
+from sklearn.model_selection import train_test_split
+
 
 def rescale_array(X):
     X = X / 20
@@ -181,6 +183,28 @@ class SeqOneOutGenerateor(Sequence):
         return seq_X, seq_y
 
 def create_dataset(data_files):
+    Xs = np.empty([0,3000,1])
+    ys = np.empty([0,])
     for dfile in data_files:
-        pass
-    pass
+        with np.load(dfile) as d:
+            x=d['x']
+            y=d['y']
+            print(f'x shape:{x.shape}')
+            print(f'y shape:{y.shape}')
+            Xs = np.vstack((Xs, x))
+            ys = np.hstack((ys,y))
+    return Xs, ys
+
+def prepare_train_test(data_dir = Path(r'..\data\physionet_sleep\eeg_fpz_cz')):
+    print('start')
+    data_files = list(data_dir.glob('*.npz'))
+    print(f'number of data files: {len(data_files)}')
+
+    train_val, test = train_test_split(data_files, test_size=0.2, random_state=42)
+    train, val = train_test_split(train_val, test_size=0.2, random_state=42)
+    return train, val, test
+
+if __name__ == "__main__":
+    print('start')
+    train, val, test = prepare_train_test(data_dir = Path(r'..\data\physionet_sleep\eeg_fpz_cz'))
+    print(len(train))
