@@ -15,6 +15,7 @@ The training step is to select and train an appropriate classification model whi
 ### Evaluation
 In the evaluation step, the data was split into training, validation, and test sets. We used 80% of the considered EEG data as the training data and the remaining 20% as the test data. For each classification method evaluated, we used a random search and then a grid search, along with cross-validation, to tune hyperparameters. The metrics to be used include precision, recall, ROC-AUC, F1 score, and confusion matrices. 
 
+
 ### Deployment
 The deployment of the selected model was implemented on local machines and AWS. Sci-kit learn and mllib were used for the machine learning models (e.g., random forests and KNN), while TensorFlow was employed for the deep learning methods (e.g., CNN and LSTM).
 
