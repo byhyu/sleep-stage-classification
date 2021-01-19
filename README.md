@@ -170,7 +170,8 @@ In command line:
     - data + lables
     - train, val, test split
 - Feature engineering
-    - automatic FE? (i.e. use CNN to extract features)
+    - automati
+c FE? (i.e. use CNN to extract features)
     - handcraft features
     - normalization?
     - data augmentation? (i.e. add noises)
@@ -182,6 +183,5 @@ In command line:
     - Deep networks, CNN, RNN, LSTM
 - Visualize
 - Write report or paper if time permits
-  google doc link: https://docs.google.com/document/d/1fRVr9LfeSHq5dsV8gXI2MyE2kPCZxkOKsmP9IM1i88U/edit#
-
+ 
 
