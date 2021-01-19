@@ -9,11 +9,28 @@ The general workflow or pipeline of the proposed approach mainly comprises four 
 Extraction of highly relevant features from the raw input data is the very first critical step in the whole workflow. EEG signals are time series data of local electrical potentials, which are gathered from electrodes placed on multiple regions of a subject’s scalp, each representing a data channel. The Rechtschaffen and Kales standard (R&K) rules and the American Academy of Sleep Medicine (AASM) define the criteria for stage scoring or staging of sleep for adults. Both R&K and AASM recommend the use of 30-second epochs of PSG signals for sleep staging. An expert scorer assigns one of the five stage names to each 30 seconds of the EEG data using the standard scoring rules.
 There are three different feature representations pertaining to EEG signals, including raw EEG data, spectrogram, and expert-defined features. The raw EEG data can be considered as a three-dimensional tensor of n epochs, m channels in each epoch, and k (i.e., 30 multiplied with the sampling rate) data points in each epoch. The time series of EEG data can be converted into the frequency domain through Fourier transformation to obtain a spectrogram, which can be described with another three-dimensional tensor of n epochs, m (e.g., 29) sub-epochs of a 2-second duration with a 1-second overlap, and k (e.g., 257) frequency bins. Features can also be manually defined by experts who examine the both time series and spectrogram of the EEG data and consult the AASM rule sets. The expert-defined features will be used as the ground truth to assess the predictive accuracy of the machine learning models.
 
+### Model Architecture
+For single sleep epoch (30s by 100Hz = 3000 data points), need to encode into a vector/tensor.
+For sleep epoch sequences (for example, 8H sleep represented by multiple 30s epochs), output a sequence of categories.
+
+CNN, SVM, or other classification models for single sleep epoch encoding.
+LSTM for sequence classification.
+
+#### Model 1: Multi-head CNN
+![](figures/cnn.png)
+
+#### Mode 2: CNN + LSTM
+![](figures/cnn_lstm.png)
+
+
 ### Training
 The training step is to select and train an appropriate classification model which can autonomously annotate the EEG data epochs using the standard stage names and the constructed features. We started with several machine learning algorithms, such as random forests and K-nearest neighbors (KNN), and then applied deep learning methods, including Concurrent Neural Networks (CNN), Recurrent Neural Networks (RNN), and a combination of both (CNN-RNN). We used a number of filters to convolve the feature matrix to produce preactivation feature maps and then invoked the Rectifier Linear Unit (ReLu) as non-linear activation functions before passing the features through a max-pooling layer to reduce the spatial size of the representation. We implemented the RNN formulation using the Long Short Term Memory (LSTM) method in Tensorflow and incorporated dropout regularization to avoid overfitting. For the hybrid CNN-RNN model, we used CNN to extract the spatial features from EEG, which is time invariant and independent in each step, and passed them to a RNN model, which learns the temporal dependency present of the spatial feature already extracted by CNN.  
-
+#### track model performance using `Tensorboard`
+In command line:
+`tensorboard --logdir playground\logs\fit`
 ### Evaluation
 In the evaluation step, the data was split into training, validation, and test sets. We used 80% of the considered EEG data as the training data and the remaining 20% as the test data. For each classification method evaluated, we used a random search and then a grid search, along with cross-validation, to tune hyperparameters. The metrics to be used include precision, recall, ROC-AUC, F1 score, and confusion matrices. 
+
 
 
 ### Deployment
@@ -153,17 +170,6 @@ This Medium article presents a simple CNN model that is easy to reproduce.
 https://towardsdatascience.com/sleep-stage-classification-from-single-channel-eeg-using-convolutional-neural-networks-5c710d92d38e
 https://github.com/CVxTz/EEG_classification
 
-## Model Architecture
-For single sleep epoch (30s by 100Hz = 3000 data points), need to encode into a vector/tensor.
-For sleep epoch sequences (for example, 8H sleep represented by multiple 30s epochs), output a sequence of categories.
-
-CNN, SVM, or other classification models for single sleep epoch encoding.
-LSTM for sequence classification.
-
-## Train models
-### track model performance using `Tensorboard`
-In command line:
-`tensorboard --logdir playground\logs\fit`
 
 
 ## Task breakup
@@ -192,9 +198,14 @@ c FE? (i.e. use CNN to extract features)
  
 ## References
 1   Lim MM, Gerstner JR, Holtzman DM. The sleep-wake cycle and Alzheimer’s disease: what do we know? Neurodegener Dis Manag 2014;4:351–62. doi:10.2217/nmt.14.33
+
 2 	Cooray N, Andreotti F, Lo C, et al. Detection of REM sleep behaviour disorder by automated polysomnography analysis. Clin Neurophysiol 2019;130:505–14. doi:10.1016/j.clinph.2019.01.011
+
 3 	Berry RB, Brooks R, Gamaldo CE, et al. The AASM manual for the scoring of sleep and associated events. … Academy of Sleep … 2012.
+
 4 	Aboalayon K, Faezipour M, Almuhammadi W, et al. Sleep stage classification using EEG signal analysis: A comprehensive survey and new investigation. Entropy 2016;18:272. doi:10.3390/e18090272
+
 5 	Hassan AR, Bashar SK, Bhuiyan MIH. On the classification of sleep states by means of statistical and spectral features from single channel Electroencephalogram. In: 2015 International Conference on Advances in Computing, Communications and Informatics (ICACCI). IEEE 2015. 2238–43. doi:10.1109/ICACCI.2015.7275950
+
 6 	Hassan AR, Hassan Bhuiyan MI. Automatic sleep scoring using statistical features in the EMD domain and ensemble methods. Biocybernetics and Biomedical Engineering 2016;36:248–55. doi:10.1016/j.bbe.2015.11.001
 
