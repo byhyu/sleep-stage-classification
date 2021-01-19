@@ -2,3 +2,4 @@
 .bashrc
 .vimrc
 *.parquet
+/pysleep.egg-info/
